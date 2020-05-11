@@ -1,0 +1,9 @@
+<p>main works!</p>
+
+<div class="recipesContainer">
+<div class="recipe" *ngFor="let recipe of recipes">
+    <a [routerLink]="[ '/recipe', recipe[0]]">
+        <img src="{{recipe[3]}}" />
+    </a>
+</div>
+</div>

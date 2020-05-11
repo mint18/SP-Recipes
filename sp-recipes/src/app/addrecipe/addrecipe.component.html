@@ -1,0 +1,28 @@
+<section>
+    <form *ngIf="!busy" (ngSubmit)="addRecipe(recipeForm.value)" [formGroup]="recipeForm">
+
+        <h2>Create a new recipe.</h2>
+        <p>Fill the form to add a new recipe.</p>
+
+       <div class="formcontrol">
+        <label for="meal_name">Title</label>
+        <input type="text" formControlName="meal_name" id="meal_name">
+      </div>
+
+      <div class="formcontrol">
+        <label for="recipe">Content</label>
+        <textarea formControlName="recipe" id="recipe"></textarea>
+      </div>
+
+      <div class="formcontrol">
+          <label for="image_file" class="image_file">Choose a Cover</label>
+          <input type="file" name="image_file" id="image_file" formControlName="image_file" (change)="handleInput($event)">
+      </div>
+        <input type="submit" [disabled]="!recipeForm.valid" value="Submit">
+      </form>
+
+      <div *ngIf="busy" class="processing">
+        <p>Processing request, please stand by, you will be redirected soon...</p>
+        <div class="loader">Loading...</div>
+      </div>
+</section>

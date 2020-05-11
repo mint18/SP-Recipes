@@ -1,0 +1,56 @@
+<section>
+    <div class="single" *ngIf="recipe">
+        <h2>{{recipe[1]}}</h2>
+
+        <img src="{{recipe[3]}}" />
+        <hr>
+        <div>{{recipe[2]}}</div>
+
+        <br/>
+        <br/>
+        <button class="cancel" (click)="enableEdit()" *ngIf="editMode; else cancel ">Cancel Edit</button>
+
+        <ng-template #cancel>
+            <button class="edit" (click)="enableEdit()" >Edit Post</button>
+        </ng-template>
+
+        <div *ngIf="editMode">
+            <p>Edit the current post bellow.</p>
+
+            <form *ngIf="!busy" (ngSubmit)="editRecipe(editForm.value)" [formGroup]="editForm">
+
+                <h2>Edit post..</h2>
+              <hr>
+                <p>Edit the form to update the post in the database.</p>
+
+                <div class="formcontrol">
+                 <label for="meal_name">Meal name</label>
+                 <input type="text" formControlName="meal_name" id="meal_name">
+               </div>
+
+               <div class="formcontrol">
+                 <label for="recipe">Recipe</label>
+                 <textarea formControlName="recipe" id="recipe"></textarea>
+               </div>
+
+               <input type="hidden" value="{{recipe[0]}}" formControlName="id" />
+               <input type="hidden" value="{{recipe[3]}}" formControlName="old_image_addr" />
+               <input type="hidden" value="{{recipe[4]}}" formControlName="image_name" />
+
+               <div class="formcontrol">
+                   <label for="image_file" class="image_file">Change image</label>
+                   <input type="file" name="image_file" id="image_file" (change)="handleInput($event)">
+               </div>
+                 <input type="submit" [disabled]="!editForm.valid" value="Submit">
+               </form>
+
+
+               <div *ngIf="busy" class="processing">
+                  <p>Processing request, please stand by, you will be redirected soon...</p>
+                  <div class="loader">Loading...</div>
+                </div>
+        </div>
+    </div>
+
+    <button class="delete" (click)="deleteRecipe(recipe[0])">Delete Post</button>
+</section>
